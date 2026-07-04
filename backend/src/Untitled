@@ -1,0 +1,28 @@
+import si from "systeminformation";
+
+/**
+ * Reads real CPU and memory stats from the OS.
+ * Returns a flat snapshot that's cheap to send over the wire every poll.
+ */
+export async function getSystemMetrics() {
+  const [load, mem] = await Promise.all([si.currentLoad(), si.mem()]);
+
+  const memUsedPercent = ((mem.active / mem.total) * 100);
+
+  return {
+    timestamp: Date.now(),
+    cpu: {
+      loadPercent: round(load.currentLoad),
+      cores: load.cpus?.length ?? null
+    },
+    memory: {
+      usedPercent: round(memUsedPercent),
+      usedGB: round(mem.active / 1024 ** 3),
+      totalGB: round(mem.total / 1024 ** 3)
+    }
+  };
+}
+
+function round(n) {
+  return Math.round(n * 10) / 10;
+}
