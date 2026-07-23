@@ -12,7 +12,8 @@ services:
       - key: NODE_ENV
         value: production
       - key: CLIENT_ORIGIN
-        sync: false
+        # Temporary: permit the deployed frontend until its exact public URL is set.
+        value: "*"
       - key: MONGODB_URI
         sync: false
       - key: DEFAULT_CPU_THRESHOLD

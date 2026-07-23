@@ -64,6 +64,10 @@ SMTP_PASS=password
 
 For Gmail, use `smtp.gmail.com`, port `587`, `SMTP_SECURE=false`, and a Gmail App Password. A normal account password usually will not work.
 
+When the frontend is deployed separately, set the Render backend's
+`CLIENT_ORIGIN` to that frontend URL. Use `*` only for temporary
+troubleshooting.
+
 ### Frontend
 
 ```bash
