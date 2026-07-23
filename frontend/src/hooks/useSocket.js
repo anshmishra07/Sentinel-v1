@@ -40,7 +40,7 @@ function useSocketConnection() {
   }
 
   useEffect(() => {
-    const socket = io(API_URL, { transports: ["websocket"] });
+    const socket = io(API_URL, { transports: ["websocket", "polling"] });
     socketRef.current = socket;
 
     socket.on("connect", () => setConnected(true));

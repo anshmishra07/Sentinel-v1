@@ -6,7 +6,7 @@ services:
     plan: free
     buildCommand: npm install
     startCommand: npm start
-    healthCheckPath: /api/health
+    healthCheckPath: /health
     autoDeploy: true
     envVars:
       - key: NODE_ENV
@@ -26,6 +26,8 @@ services:
       - key: ALERT_EMAIL_TO
         sync: false
       - key: ALERT_EMAIL_FROM
+        sync: false
+      - key: RESEND_API_KEY
         sync: false
       - key: SMTP_HOST
         sync: false
