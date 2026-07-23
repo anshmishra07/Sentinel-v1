@@ -12,8 +12,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: CLIENT_ORIGIN
-        # Temporary: permit the deployed frontend until its exact public URL is set.
-        value: "*"
+        value: https://frontend-ten-ebon-45.vercel.app
       - key: MONGODB_URI
         sync: false
       - key: DEFAULT_CPU_THRESHOLD
