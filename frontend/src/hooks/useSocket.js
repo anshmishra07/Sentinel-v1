@@ -1,7 +1,7 @@
 import { createContext, createElement, useContext, useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-const API_URL = import.meta.env.VITE_API_URL || "https://sentinel-q5kd.onrender.com";
+const API_URL = "https://sentinel-q5kd.onrender.com";
 const HISTORY_LENGTH = 30; // ~90s of history at a 3s poll interval
 const SocketContext = createContext(null);
 
