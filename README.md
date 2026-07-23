@@ -1,39 +1,81 @@
 # Sentinel Monitor
 
-Distributed System Resource Monitoring Platform for small teams, labs, and personal infrastructure.
+> A full-stack distributed system monitoring platform for monitoring laptops, desktops, virtual machines, and remote servers in real time.
 
-Sentinel Monitor runs a lightweight Python agent on each monitored device, streams telemetry to a Node.js backend over Socket.IO, stores historical metrics in MongoDB, and visualizes fleet health in a React dashboard.
+🌐 **Live Demo:** https://frontend-ten-ebon-45.vercel.app/  
+
+
+---
 
 ## Features
 
-- Multi-device monitoring for laptops, desktops, VMs, and remote servers.
-- Real-time CPU, memory, disk, network, uptime, and top-process telemetry.
-- Per-core CPU usage, available memory, free disk, upload/download rates, and total network usage.
-- Historical analytics for the last hour, 24 hours, and 7 days.
-- Device availability tracking with online/offline status and last-seen timestamps.
-- Health score from 0-100 based on CPU, RAM, disk, and availability.
-- Configurable CPU, RAM, and disk alert thresholds.
-- Alert levels for info, warning, and critical events.
-- Email notifications for threshold breaches, offline devices, and reconnect events.
+- 📊 Real-time monitoring of CPU, memory, disk, network, uptime, and running processes.
+- 🖥️ Monitor multiple devices from a centralized dashboard.
+- 📈 Historical analytics for the last **1 hour**, **24 hours**, and **7 days**.
+- 🟢 Live online/offline device status with automatic heartbeat detection.
+- ❤️ Intelligent device health score (0–100).
+- 🚨 Configurable CPU, memory, and disk usage alerts.
+- 📧 Email notifications for:
+  - Resource threshold breaches
+  - Device offline events
+  - Device reconnection events
+- 🔄 Real-time updates powered by Socket.IO.
+- 🔍 Interactive charts and system metrics dashboard.
+
+---
 
 ## Architecture
 
 ```mermaid
 graph TD
-  Agent[Python psutil Agent] -->|Socket.IO telemetry| Backend[Node.js Express + Socket.IO]
-  Backend --> MongoDB[(MongoDB)]
-  Backend -->|REST API + WebSocket events| Frontend[React Dashboard]
-  Backend -->|Nodemailer| Email[Email Notifications]
+    A[Python Monitoring Agent] -->|Socket.IO| B[Node.js Backend]
+    B --> C[(MongoDB)]
+    B -->|REST API + WebSocket| D[React Dashboard]
+    B --> E[Email Notifications]
 ```
+
+---
 
 ## Tech Stack
 
-- Frontend: React, Vite, Recharts, Socket.IO Client, Tailwind-ready CSS.
-- Backend: Node.js, Express, Socket.IO, Mongoose, Nodemailer.
-- Database: MongoDB.
-- Agent: Python, psutil, python-socketio.
+### Frontend
+- React
+- Vite
+- Recharts
+- Socket.IO Client
 
-## Getting Started
+### Backend
+- Node.js
+- Express.js
+- Socket.IO
+- MongoDB
+- Mongoose
+- Nodemailer
+
+### Monitoring Agent
+- Python
+- psutil
+- python-socketio
+
+### Deployment
+- Vercel (Frontend)
+- Render (Backend)
+- MongoDB Atlas
+
+---
+
+
+
+
+
+### Clone
+
+```bash
+git clone https://github.com/anshmishra07/Sentinel-v1.git
+cd Sentinel-v1
+```
+
+---
 
 ### Backend
 
@@ -43,30 +85,27 @@ npm install
 npm run dev
 ```
 
-Create `backend/.env` if you need custom settings:
+Create a `.env` file:
 
-```bash
+```env
 PORT=4000
 CLIENT_ORIGIN=http://localhost:5173
-MONGODB_URI=mongodb://127.0.0.1:27017/devops_tracker
+
+MONGODB_URI=your_mongodb_connection_string
+
 DEFAULT_CPU_THRESHOLD=85
 DEFAULT_MEMORY_THRESHOLD=90
 DEFAULT_DISK_THRESHOLD=95
+
 DEVICE_OFFLINE_AFTER_MS=15000
-ALERT_EMAIL_TO=admin@example.com
+
+ALERT_EMAIL_TO=your_email@example.com
 ALERT_EMAIL_FROM=Sentinel Monitor <alerts@example.com>
-SMTP_HOST=smtp.example.com
-SMTP_PORT=587
-SMTP_SECURE=false
-SMTP_USER=user
-SMTP_PASS=password
+
+RESEND_API_KEY=your_resend_api_key
 ```
 
-For Gmail, use `smtp.gmail.com`, port `587`, `SMTP_SECURE=false`, and a Gmail App Password. A normal account password usually will not work.
-
-When the frontend is deployed separately, set the Render backend's
-`CLIENT_ORIGIN` to that frontend URL. Use `*` only for temporary
-troubleshooting.
+---
 
 ### Frontend
 
@@ -76,24 +115,72 @@ npm install
 npm run dev
 ```
 
-Open the Vite URL, usually `http://localhost:5173`.
+---
 
 ### Agent
+
+Install dependencies:
 
 ```bash
 cd agent
 pip install -r requirements.txt
+```
+
+Run locally:
+
+```bash
 python agent.py
 ```
 
-By default the agent connects to `http://localhost:4000` and sends telemetry every 3 seconds.
-
-For another laptop, desktop, VM, or server, point the agent at the central backend:
+To connect to a deployed backend:
 
 ```bash
-set SENTINEL_BACKEND_URL=http://YOUR_BACKEND_IP:4000
+set SENTINEL_BACKEND_URL=https://YOUR_RENDER_BACKEND.onrender.com
 set SENTINEL_DEVICE_TYPE=laptop
 python agent.py
 ```
 
-Use `desktop`, `vm`, or `remote-server` for `SENTINEL_DEVICE_TYPE` as needed.
+Supported device types:
+
+- laptop
+- desktop
+- vm
+- remote-server
+
+---
+
+## Deployment
+
+### Frontend
+
+Deploy on **Vercel**.
+
+### Backend
+
+Deploy on **Render**.
+
+Configure:
+
+```env
+CLIENT_ORIGIN=https://frontend-ten-ebon-45.vercel.app
+```
+
+---
+
+
+
+## Future Improvements
+
+- Authentication & user accounts
+- Docker deployment
+- Kubernetes support
+- Prometheus integration
+- Mobile responsive dashboard
+- Slack & Discord alert integrations
+- Agent auto-updater
+
+---
+
+## License
+
+MIT License.
